@@ -29,7 +29,7 @@ def MeshBoolean(context):
   import subprocess
   import tempfile
   import platform
-  from qtsalome import QFileDialog, QMessageBox
+  from PySide2.QtWidgets import QFileDialog, QMessageBox
   
   import meshbooleanplugin.mesh_boolean_dialog as mesh_boolean_dialog
   items = []

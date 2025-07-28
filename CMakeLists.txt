@@ -86,8 +86,7 @@ ELSE ()
 
   # Python Qt
   # ===========
-  FIND_PACKAGE(SalomePyQt5 REQUIRED)
-  INCLUDE(UsePyQt)
+  INCLUDE(UsePySideShiboken)
 
   SET(_plugin_SCRIPTS
     mesh_boolean_plugin.py
@@ -101,7 +100,7 @@ ELSE ()
   )
 
   # scripts / pyuic wrappings
-  PYQT_WRAP_UIC(_pyuic_SCRIPTS ${_pyuic_FILES} TARGET_NAME _target_name_pyuic)
+  PYSIDE2_WRAP_UIC(_pyuic_SCRIPTS ${_pyuic_FILES} TARGET_NAME _target_name_pyuic)
 
   # Installation
   SET(Mesh_Boolean_INSTALL_PLUGIN "plugins/meshbooleanplugin")

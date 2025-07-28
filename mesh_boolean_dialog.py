@@ -23,8 +23,11 @@ import tempfile
 import re
 import sys
 from meshbooleanplugin.MyPlugDialog_ui import Ui_MyPlugDialog
-from qtsalome import *
-from PyQt5.QtCore import Qt
+
+from PySide2.QtWidgets import QWidget, QMessageBox, QApplication, QFileDialog
+from PySide2.QtGui import QPixmap, QCursor, QIcon
+from PySide2.QtCore import Qt, QCoreApplication
+
 import qwt
 from meshbooleanplugin.vtk.exec_vtk import VTK_main
 from meshbooleanplugin.irmb.exec_irmb import IRMB_main
@@ -130,7 +133,6 @@ class MeshBooleanDialog(Ui_MyPlugDialog,QWidget):
   """
   """
   def __init__(self):
-    from PyQt5 import QtCore
     QWidget.__init__(self)
     self.setWindowFlags(self.windowFlags() | Qt.WindowStaysOnTopHint)
     self.setupUi(self)
@@ -146,7 +148,7 @@ class MeshBooleanDialog(Ui_MyPlugDialog,QWidget):
     self.meshIn_R=""
     self.isFile_R=False
     self.operator=""
-    _translate = QtCore.QCoreApplication.translate
+    _translate = QCoreApplication.translate
     self.label_summup.setText(_translate("MyPlugDialog", ""))
 
     # complex with QResources: not used
@@ -193,8 +195,7 @@ class MeshBooleanDialog(Ui_MyPlugDialog,QWidget):
     self.COB_Metric.currentIndexChanged.connect(self.update_graph)
 
   def DisplaySummupLabel(self):
-    from PyQt5 import QtCore
-    _translate = QtCore.QCoreApplication.translate
+    _translate = QCoreApplication.translate
     if self.meshIn_L == "" or self.meshIn_R == "":
       self.label_summup.setText(_translate("MyPlugDialog", ""))
       return
@@ -264,8 +265,7 @@ class MeshBooleanDialog(Ui_MyPlugDialog,QWidget):
       self.meshIn_R = objTmpFileName
 
   def update_graph(self):
-    from PyQt5 import QtCore
-    _translate = QtCore.QCoreApplication.translate
+    _translate = QCoreApplication.translate
     data = {}
     if self.COB_Metric.currentIndex() == METRICS_DICT['Execution Time']:
       data = DIFFERENCE_TIME_DATA
@@ -302,16 +302,14 @@ class MeshBooleanDialog(Ui_MyPlugDialog,QWidget):
     self.DisplaySummupLabel()
 
   def DisplayOperatorLabel(self):
-    from PyQt5 import QtCore, QtGui, QtWidgets
-    _translate = QtCore.QCoreApplication.translate
+    _translate = QCoreApplication.translate
     for key, val in OPERATOR_DICT.items():
       if self.COB_Operator.currentIndex() == val:
         self.label_Operator.setText(_translate("MyPlugDialog", f"Compute the {key.lower()} of the two meshes selected."))
     self.update_graph()
 
   def DisplayEngineLabel(self):
-    from PyQt5 import QtCore, QtGui, QtWidgets
-    _translate = QtCore.QCoreApplication.translate
+    _translate = QCoreApplication.translate
     self.label_Engine.setText(_translate("MyPlugDialog", f"This engine is used under the {LICENSE_DICT[self.getCurrentAlgorithm()]} license."))
     self.label_Benchmark.setText(_translate("MyPlugDialog", ENGINE_BENCHMARK_DICT[self.getCurrentAlgorithm()]))
     self.update_graph()
